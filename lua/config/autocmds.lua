@@ -19,8 +19,6 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 })
 
 -- Disable folding in Telescope's result window.
--- vim.api.nvim_create_autocmd("FileType", { pattern = "TelescopeResults", command = [[setlocal nofoldenable]] })
-
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "TelescopeResults" },
   callback = function()

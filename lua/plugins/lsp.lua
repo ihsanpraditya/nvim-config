@@ -143,6 +143,10 @@ return {
         },
       })
 
+      -- https://github.com/neovim/nvim-lspconfig/blob/master/lsp/texlab.lua
+      -- https://github.com/latex-lsp/texlab
+      vim.lsp.config('texlab', {})
+
       vim.lsp.config('lua_ls', {
         settings = {
           Lua = {
@@ -224,29 +228,41 @@ return {
     end,
   },
   {
-    'nvimtools/none-ls.nvim',
+    "nvimtools/none-ls.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
       local null_ls = require("null-ls")
-
       null_ls.setup({
         sources = {
+          -- formatters
           null_ls.builtins.formatting.stylua,
           null_ls.builtins.formatting.blade_formatter,
+          null_ls.builtins.formatting.phpcsfixer,
+          null_ls.builtins.formatting.pint,
+          null_ls.builtins.formatting.prettier,
           null_ls.builtins.formatting.goimports,
           null_ls.builtins.formatting.google_java_format,
-          null_ls.builtins.formatting.phpcsfixer,
 
+          -- linters
           null_ls.builtins.diagnostics.checkstyle.with({
             extra_args = { "-c", "/google_checks.xml" }, -- or "/sun_checks.xml" or path to self written rules
           }),
+          null_ls.builtins.diagnostics.selene,
+          null_ls.builtins.diagnostics.phpstan,
           null_ls.builtins.diagnostics.phpcs,
           null_ls.builtins.diagnostics.phpmd.with({
             args = { "$FILENAME", "json", vim.fn.getcwd() .. "/phpmd.xml" }
           }),
           null_ls.builtins.diagnostics.phpstan,
           null_ls.builtins.diagnostics.staticcheck,
-        },
+
+          -- code actions
+          null_ls.builtins.code_actions.gitsigns,
+
+          -- hover
+          null_ls.builtins.hover.printenv,
+        }
       })
-    end
+    end,
   }
 }
