@@ -249,6 +249,7 @@ return {
           }),
           null_ls.builtins.diagnostics.selene,
           null_ls.builtins.diagnostics.phpstan,
+          null_ls.builtins.diagnostics.phpmd,
           null_ls.builtins.diagnostics.phpcs,
           null_ls.builtins.diagnostics.phpmd.with({
             args = { "$FILENAME", "json", vim.fn.getcwd() .. "/phpmd.xml" }
