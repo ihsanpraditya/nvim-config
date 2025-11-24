@@ -113,6 +113,7 @@ return {
               maxSize = 1000000,
               associations = { '*.php', '*.phtml', '*.blade.php' }
             },
+            maxMemory = 256,
             completion = {
               enable = true
             },
@@ -216,9 +217,9 @@ return {
         }),
       })
 
-      vim.keymap.set({ "i" }, "<C-K>", function() luasnip.expand() end, { silent = true })
-      vim.keymap.set({ "i", "s" }, "<C-L>", function() luasnip.jump(1) end, { silent = true })
-      vim.keymap.set({ "i", "s" }, "<C-J>", function() luasnip.jump(-1) end, { silent = true })
+      vim.keymap.set({ "i" }, "<C-k>", function() luasnip.expand() end, { silent = true })
+      vim.keymap.set({ "i", "s" }, "<C-l>", function() luasnip.jump(1) end, { silent = true })
+      vim.keymap.set({ "i", "s" }, "<C-j>", function() luasnip.jump(-1) end, { silent = true })
 
     end,
   },
@@ -232,9 +233,17 @@ return {
           null_ls.builtins.formatting.stylua,
           null_ls.builtins.formatting.blade_formatter,
           null_ls.builtins.formatting.goimports,
+          null_ls.builtins.formatting.google_java_format,
           null_ls.builtins.formatting.phpcsfixer,
 
+          null_ls.builtins.diagnostics.checkstyle.with({
+            extra_args = { "-c", "/google_checks.xml" }, -- or "/sun_checks.xml" or path to self written rules
+          }),
           null_ls.builtins.diagnostics.phpcs,
+          null_ls.builtins.diagnostics.phpmd.with({
+            args = { "$FILENAME", "json", vim.fn.getcwd() .. "/phpmd.xml" }
+          }),
+          null_ls.builtins.diagnostics.phpstan,
           null_ls.builtins.diagnostics.staticcheck,
         },
       })

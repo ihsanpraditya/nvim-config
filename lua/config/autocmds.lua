@@ -42,3 +42,10 @@ vim.api.nvim_create_autocmd('FileType', {
     })
   end,
 })
+
+-- Toggle LSP diagnostics
+vim.api.nvim_create_user_command('ToggleDiagnostics', function()
+    local current_state = vim.diagnostic.is_enabled()
+    vim.diagnostic.enable(not current_state)
+    print("Diagnostics " .. (current_state and "disabled" or "enabled"))
+end, {})
