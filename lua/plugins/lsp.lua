@@ -233,6 +233,7 @@ return {
     config = function()
       local null_ls = require("null-ls")
       null_ls.setup({
+        debug = true,
         sources = {
           -- formatters
           null_ls.builtins.formatting.stylua,
@@ -249,7 +250,11 @@ return {
           }),
           null_ls.builtins.diagnostics.selene,
           null_ls.builtins.diagnostics.phpstan,
-          null_ls.builtins.diagnostics.phpmd,
+          null_ls.builtins.diagnostics.phpmd.with({
+            extra_args = { 
+              vim.fn.getcwd() .. "/phpmd.xml"  -- Current project root
+            }
+          }),
           null_ls.builtins.diagnostics.phpcs,
           null_ls.builtins.diagnostics.phpmd.with({
             args = { "$FILENAME", "json", vim.fn.getcwd() .. "/phpmd.xml" }
@@ -265,5 +270,26 @@ return {
         }
       })
     end,
-  }
+  },
+  -- {
+  --   "mhartington/formatter.nvim",
+  --   config = function()
+  --     local formatter = require("formatter")
+  --     formatter.setup({
+  --       logging = true,
+  --       log_level = vim.log.levels.WARN,
+  --       filetype = {
+  --         lua = {
+  --           require("formatter.filetypes.lua").stylua
+  --         },
+  --         php = {
+  --           require("formatter.filetypes.php").phpcs
+  --         },
+  --         ["*"] = {
+  --           require("formatter.filetypes.any").remove_trailing_whitespace,
+  --         }
+  --       }
+  --     })
+  --   end
+  -- }
 }

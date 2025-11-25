@@ -385,35 +385,55 @@ return {
   -- { "jwalton512/vim-blade" },
   {
     'stevearc/conform.nvim', -- Lightweight yet powerful formatter plugin for Neovim
+    event = { "BufWritePre" },
+    cmd = { "ConformInfo" },
+    ---@module "conform"
+    ---@type conform.setupOpts
     opts = function ()
-      local util = require("conform.util")
+      ---@param bufnr integer
+      ---@param ... string
+      ---@return string
+      local function first(bufnr, ...)
+        local conform = require("conform")
+          for i = 1, select("#", ...) do
+            local formatter = select(i, ...)
+            if conform.get_formatter_info(formatter, bufnr).available then
+              return formatter
+            end
+          end
+        return select(1, ...)
+      end
       local opts = {
         formatters_by_ft = {
           lua = { "stylua" },
           javascript = { "prettierd" },
           typescript = { "prettier" },
-          php = { "pint" },
-          blade = { "blade-formatter", "rustywind" },
+          php = function(bufnr)
+            return { first(bufnr, "pint", "php-cs-fixer") }
+          end,
+          blade = function(bufnr)
+            return { first(bufnr, "blade-formatter", "rustywind") }
+          end,
         },
         formatters = {
           injected = { options = { ignore_errors = true } },
-          pint = {
-            meta = {
-              url = "https://github.com/laravel/pint",
-              description = "Laravel Pint is an opinionated PHP code style fixer for minimalists. Pint is built on top of PHP-CS-Fixer and makes it simple to ensure that your code style stays clean and consistent.",
-            },
-            command = util.find_executable({
-              vim.fn.stdpath("data") .. "/mason/bin/pint",
-              "vendor/bin/pint",
-            }, "pint"),
-            args = { "$FILENAME" },
-            stdin = false,
-          },
         }
       }
       return opts
+    end,
+    config = function()
+      vim.api.nvim_create_user_command("Format", function(args)
+        local range = nil
+        if args.count ~= -1 then
+          local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
+          range = {
+            start = { args.line1, 0 },
+            ["end"] = { args.line2, end_line:len() },
+          }
+        end
+        require("conform").format({ async = true, lsp_format = "fallback", range = range })
+      end, { range = true })
     end
-    ,
   },
   -- {
   --   'nvim-orgmode/orgmode',
