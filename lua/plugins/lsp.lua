@@ -171,8 +171,55 @@ return {
 
       vim.lsp.config('vue_ls', {})
     end,
-  },{
-    "github/copilot.vim"
+  },{ "zbirenbaum/copilot.lua",
+    dependencies = {
+      "copilotlsp-nvim/copilot-lsp", -- (optional) for NES functionality
+    },
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({
+        panel = {
+          enabled = true,
+          auto_refresh = false,
+          keymap = {
+            jump_prev = "[[",
+            jump_next = "]]",
+            accept = "<CR>",
+            refresh = "gr",
+            open = "<M-CR>"
+          },
+          layout = {
+            position = "bottom", -- | top | left | right | bottom |
+            ratio = 0.4
+          },
+        },
+        suggestion = {
+          enabled = true,
+          auto_trigger = false,
+          hide_during_completion = true,
+          debounce = 75,
+          trigger_on_accept = true,
+          keymap = {
+            accept = "<M-l>",
+            accept_word = false,
+            accept_line = false,
+            next = "<M-]>",
+            prev = "<M-[>",
+            dismiss = "<C-]>",
+          },
+        },
+        nes = {
+          enabled = false, -- requires copilot-lsp as a dependency
+          auto_trigger = false,
+          keymap = {
+            accept_and_goto = false,
+            accept = false,
+            dismiss = false,
+          },
+        },
+      })
+    end,
   },
   {
     "CopilotC-Nvim/CopilotChat.nvim",
@@ -190,6 +237,7 @@ return {
           vim.opt_local.conceallevel = 0
         end,
       })
+      vim.keymap.set({ "n" }, "<Leader>b", "<Cmd>CopilotChatToggle<CR>", { silent = true })
     end,
     opts = {
       model = 'gpt-4.1',           -- AI model to use
@@ -292,16 +340,15 @@ return {
             extra_args = { "-c", "/google_checks.xml" }, -- or "/sun_checks.xml" or path to self written rules
           }),
           null_ls.builtins.diagnostics.selene,
-          null_ls.builtins.diagnostics.phpstan,
+          null_ls.builtins.diagnostics.phpcs,
           null_ls.builtins.diagnostics.phpmd.with({
             extra_args = { 
               vim.fn.getcwd() .. "/phpmd.xml"  -- Current project root
             }
           }),
-          null_ls.builtins.diagnostics.phpcs,
-          null_ls.builtins.diagnostics.phpmd.with({
-            args = { "$FILENAME", "json", vim.fn.getcwd() .. "/phpmd.xml" }
-          }),
+          -- null_ls.builtins.diagnostics.phpmd.with({
+          --   args = { "$FILENAME", "json", vim.fn.getcwd() .. "/phpmd.xml" }
+          -- }),
           null_ls.builtins.diagnostics.phpstan,
           null_ls.builtins.diagnostics.staticcheck,
 
@@ -314,25 +361,4 @@ return {
       })
     end,
   },
-  -- {
-  --   "mhartington/formatter.nvim",
-  --   config = function()
-  --     local formatter = require("formatter")
-  --     formatter.setup({
-  --       logging = true,
-  --       log_level = vim.log.levels.WARN,
-  --       filetype = {
-  --         lua = {
-  --           require("formatter.filetypes.lua").stylua
-  --         },
-  --         php = {
-  --           require("formatter.filetypes.php").phpcs
-  --         },
-  --         ["*"] = {
-  --           require("formatter.filetypes.any").remove_trailing_whitespace,
-  --         }
-  --       }
-  --     })
-  --   end
-  -- }
 }

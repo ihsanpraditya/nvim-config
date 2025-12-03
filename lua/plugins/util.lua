@@ -33,8 +33,8 @@ return {
     cmd = { "Neotree" },
     keys = {
       { "<Leader>t", "<Cmd>Neotree toggle<CR>" }, -- change or remove this line if relevant.
-      { "<Leader>g", "<Cmd>Neotree focus git_status<CR>" }, -- change or remove this line if relevant.
-      { "<Leader>y", "<Cmd>Neotree filesystem reveal<CR>" }, -- change or remove this line if relevant.
+      { "<Leader>g", "<Cmd>Neotree focus git_status toggle<CR>" }, -- change or remove this line if relevant.
+      { "<Leader>y", "<Cmd>Neotree filesystem reveal toggle<CR>" }, -- change or remove this line if relevant.
     },
     lazy = false, -- neo-tree will lazily load itself
     ---@module 'neo-tree'
