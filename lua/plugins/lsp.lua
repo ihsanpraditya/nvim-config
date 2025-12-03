@@ -171,7 +171,8 @@ return {
 
       vim.lsp.config('vue_ls', {})
     end,
-  },{ "zbirenbaum/copilot.lua",
+  },{
+    "zbirenbaum/copilot.lua",
     dependencies = {
       "copilotlsp-nvim/copilot-lsp", -- (optional) for NES functionality
     },
@@ -319,6 +320,8 @@ return {
     end,
   },
   {
+    -- available builtins config
+    -- https://github.com/nvimtools/none-ls.nvim/blob/main/doc/BUILTINS.md
     "nvimtools/none-ls.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
@@ -333,10 +336,10 @@ return {
           null_ls.builtins.formatting.pint,
           null_ls.builtins.formatting.prettier,
           null_ls.builtins.formatting.goimports,
-          null_ls.builtins.formatting.google_java_format,
+          null_ls.builtins.formatting.google_java_format, -- Java
 
           -- linters
-          null_ls.builtins.diagnostics.checkstyle.with({
+          null_ls.builtins.diagnostics.checkstyle.with({ -- for Java
             extra_args = { "-c", "/google_checks.xml" }, -- or "/sun_checks.xml" or path to self written rules
           }),
           null_ls.builtins.diagnostics.selene,
