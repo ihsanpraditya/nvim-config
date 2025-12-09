@@ -10,63 +10,63 @@ return {
       local cmp_nvim_lsp = require("cmp_nvim_lsp")
       local keymap = vim.keymap
       vim.api.nvim_create_autocmd("LspAttach", {
-      group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-      callback = function(ev)
-        -- Buffer local mappings.
-        -- See `:help vim.lsp.*` for documentation on any of the below functions
-        local opts = { buffer = ev.buf, silent = true }
+        group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+        callback = function(ev)
+          -- Buffer local mappings.
+          -- See `:help vim.lsp.*` for documentation on any of the below functions
+          local opts = { buffer = ev.buf, silent = true }
 
-        -- set keybinds
-        opts.desc = "Show LSP references"
-        keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
+          -- set keybinds
+          opts.desc = "Show LSP references"
+          keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
 
-        opts.desc = "Go to declaration"
-        keymap.set("n", "gD", vim.lsp.buf.declaration, opts) -- go to declaration
+          opts.desc = "Go to declaration"
+          keymap.set("n", "gD", vim.lsp.buf.declaration, opts) -- go to declaration
 
-        opts.desc = "Show LSP definitions"
-        keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts) -- show lsp definitions
+          opts.desc = "Show LSP definitions"
+          keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts) -- show lsp definitions
 
-        opts.desc = "Show LSP implementations"
-        keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts) -- show lsp implementations
+          opts.desc = "Show LSP implementations"
+          keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts) -- show lsp implementations
 
-        -- opts.desc = "Show LSP type definitions"
-        -- keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts) -- show lsp type definitions
+          -- opts.desc = "Show LSP type definitions"
+          -- keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts) -- show lsp type definitions
 
-        -- opts.desc = "See available code actions"
-        -- keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
-        --
-        -- opts.desc = "Smart rename"
-        -- keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- smart rename
-        --
-        -- opts.desc = "Show buffer diagnostics"
-        -- keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
-        --
-        -- opts.desc = "Show line diagnostics"
-        -- keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line
+          -- opts.desc = "See available code actions"
+          -- keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
+          --
+          -- opts.desc = "Smart rename"
+          -- keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- smart rename
+          --
+          -- opts.desc = "Show buffer diagnostics"
+          -- keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
+          --
+          -- opts.desc = "Show line diagnostics"
+          -- keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line
 
-        local function jump_diagnostic(delta)
-          return function()
-            vim.diagnostic.jump({ count = delta, float = true })
+          local function jump_diagnostic(delta)
+            return function()
+              vim.diagnostic.jump({ count = delta, float = true })
+            end
           end
-        end
-        opts.desc = "Go to previous diagnostic"
-        keymap.set("n", "[d", jump_diagnostic(-1), opts) -- jump to previous diagnostic in buffer
+          opts.desc = "Go to previous diagnostic"
+          keymap.set("n", "[d", jump_diagnostic(-1), opts) -- jump to previous diagnostic in buffer
 
-        opts.desc = "Go to next diagnostic"
-        keymap.set("n", "]d", jump_diagnostic(1), opts) -- jump to next diagnostic in buffer
+          opts.desc = "Go to next diagnostic"
+          keymap.set("n", "]d", jump_diagnostic(1), opts) -- jump to next diagnostic in buffer
 
-        opts.desc = "Show error in float window"
-        keymap.set("n", "[e", vim.diagnostic.open_float, opts)
+          opts.desc = "Show error in float window"
+          keymap.set("n", "[e", vim.diagnostic.open_float, opts)
 
-        opts.desc = "Add error to location list"
-        keymap.set("n", "]e", vim.diagnostic.setloclist, opts)
+          opts.desc = "Add error to location list"
+          keymap.set("n", "]e", vim.diagnostic.setloclist, opts)
 
-        opts.desc = "Show documentation for what is under cursor"
-        keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
+          opts.desc = "Show documentation for what is under cursor"
+          keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
 
-        opts.desc = "Restart LSP"
-        keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
-      end,
+          -- opts.desc = "Restart LSP"
+          -- keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
+        end,
       })
 
       local capabilities = cmp_nvim_lsp.default_capabilities()
@@ -171,97 +171,6 @@ return {
 
       vim.lsp.config('vue_ls', {})
     end,
-  },{
-    "zbirenbaum/copilot.lua",
-    dependencies = {
-      "copilotlsp-nvim/copilot-lsp", -- (optional) for NES functionality
-    },
-    cmd = "Copilot",
-    event = "InsertEnter",
-    config = function()
-      require("copilot").setup({
-        panel = {
-          enabled = true,
-          auto_refresh = false,
-          keymap = {
-            jump_prev = "[[",
-            jump_next = "]]",
-            accept = "<CR>",
-            refresh = "gr",
-            open = "<M-CR>"
-          },
-          layout = {
-            position = "bottom", -- | top | left | right | bottom |
-            ratio = 0.4
-          },
-        },
-        suggestion = {
-          enabled = true,
-          auto_trigger = false,
-          hide_during_completion = true,
-          debounce = 75,
-          trigger_on_accept = true,
-          keymap = {
-            accept = "<M-l>",
-            accept_word = false,
-            accept_line = false,
-            next = "<M-]>",
-            prev = "<M-[>",
-            dismiss = "<C-]>",
-          },
-        },
-        nes = {
-          enabled = false, -- requires copilot-lsp as a dependency
-          auto_trigger = false,
-          keymap = {
-            accept_and_goto = false,
-            accept = false,
-            dismiss = false,
-          },
-        },
-      })
-    end,
-  },
-  {
-    "CopilotC-Nvim/CopilotChat.nvim",
-    dependencies = {
-      { "nvim-lua/plenary.nvim", branch = "master" },
-    },
-    build = "make tiktoken",
-    config = function()
-      -- Auto-command to customize chat buffer behavior
-      vim.api.nvim_create_autocmd('BufEnter', {
-        pattern = 'copilot-*',
-        callback = function()
-          vim.opt_local.relativenumber = false
-          vim.opt_local.number = false
-          vim.opt_local.conceallevel = 0
-        end,
-      })
-      vim.keymap.set({ "n" }, "<Leader>b", "<Cmd>CopilotChatToggle<CR>", { silent = true })
-    end,
-    opts = {
-      model = 'gpt-4.1',           -- AI model to use
-      temperature = 0.1,           -- Lower = focused, higher = creative
-      auto_insert_mode = true,     -- Enter insert mode when opening
-      window = {
-        layout = 'float',
-        width = 80, -- Fixed width in columns
-        height = 20, -- Fixed height in rows
-        border = 'rounded', -- 'single', 'double', 'rounded', 'solid'
-        title = '🤖 AI Assistant',
-        zindex = 100, -- Ensure window stays on top
-      },
-
-      headers = {
-        user = '👤 You',
-        assistant = '🤖 Copilot',
-        tool = '🔧 Tool',
-      },
-
-      separator = '━━',
-      auto_fold = true, -- Automatically folds non-assistant messages
-    },
   },
   {
     "hrsh7th/nvim-cmp",

@@ -89,3 +89,30 @@ end
 function HorFormatter()
   require("conform").format()
 end
+
+-- Command to set colorscheme with transparency
+vim.api.nvim_create_user_command("Transparent", function(opts)
+  local color = opts.args ~= "" and opts.args or vim.g.colors_name or "default"
+
+  local success = pcall(function()
+    vim.cmd.colorscheme(color)
+  end)
+
+  if not success then
+    print(color .. " is not available or loaded")
+    return
+  end
+
+  -- Make backgrounds transparent
+  vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+  vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+  vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
+  vim.api.nvim_set_hl(0, "SignColumn", { bg = "none" })
+  vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "none" })
+
+  print("Transparency enabled with colorscheme: " .. color)
+end, {
+  nargs = "?",
+  complete = "color",
+  desc = "Set colorscheme with transparent background",
+})
