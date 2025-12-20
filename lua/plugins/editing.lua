@@ -2,7 +2,6 @@
 -- fugitive
 -- rhubarb
 -- diffview
--- ledger
 -- tabular
 -- illuminate
 -- sleuth
@@ -13,7 +12,6 @@ return {
   { "tpope/vim-fugitive" },
   { "tpope/vim-rhubarb" },
   { "sindrets/diffview.nvim" },
-  { "ledger/vim-ledger" },
   { "godlygeek/tabular" },
   { "RRethy/vim-illuminate" },
   { "tpope/vim-sleuth" }, -- Heuristically set buffer options
