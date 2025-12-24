@@ -234,6 +234,7 @@ return {
     "nvimtools/none-ls.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
+      local is_android = vim.fn.has('android') == 1
       local null_ls = require("null-ls")
       null_ls.setup({
         debug = true,
@@ -251,7 +252,7 @@ return {
           null_ls.builtins.diagnostics.checkstyle.with({ -- for Java
             extra_args = { "-c", "/google_checks.xml" }, -- or "/sun_checks.xml" or path to self written rules
           }),
-          null_ls.builtins.diagnostics.selene,
+          not is_android and null_ls.builtins.diagnostics.selene or nil,
           null_ls.builtins.diagnostics.phpcs,
           null_ls.builtins.diagnostics.phpmd.with({
             extra_args = { 
