@@ -47,3 +47,11 @@ vim.api.nvim_create_user_command('ToggleDiagnostics', function()
     vim.diagnostic.enable(not current_state)
     print("Diagnostics " .. (current_state and "disabled" or "enabled"))
 end, {})
+
+-- Disable folding in Telescope's result window.
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "ledger" },
+  callback = function()
+    vim.o.shiftwidth = 2
+  end
+})
