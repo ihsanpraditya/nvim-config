@@ -35,8 +35,9 @@ return {
           -- opts.desc = "See available code actions"
           -- keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
 
-          opts.desc = "Smart rename"
-          keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- smart rename
+          -- commented due to official keymap: grn
+          -- opts.desc = "Smart rename"
+          -- keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- smart rename
 
           -- opts.desc = "Show buffer diagnostics"
           -- keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
@@ -104,44 +105,48 @@ return {
 
       vim.lsp.config('gopls', {})
 
+      -- PHP
       -- docs: https://github.com/bmewburn/intelephense-docs/blob/master/installation.md
-      vim.lsp.config('intelephense', {
-        filetypes = { 'php', 'blade', 'php_only' },
-        settings = {
-          intelephense = {
-            files = {
-              maxSize = 1000000,
-              associations = { '*.php', '*.phtml', '*.blade.php' }
-            },
-            maxMemory = 256,
-            completion = {
-              enable = true
-            },
-            format = {
-              enable = true
-            },
-            environment = {
-              includePaths = {
-                vim.fs.joinpath(vim.fn.getcwd(), '_ide_helper.php')
-              }
-            },
-            stubs = {
-              'standard',
-              'Core',
-              'date',
-              'phpunit',
-              'laravel',
-              'pcre',
-              'intl'
-            },
-            diagnostics = {
-              enable = true,
-              run = 'onType', -- onType | onSave
-              -- undefinedMethods = false
-            },
-          },
-        },
-      })
+      -- https://github.com/neovim/nvim-lspconfig/blob/master/lsp/intelephense.lua
+      -- vim.lsp.config('intelephense', {
+      --   filetypes = { 'php', 'blade', 'php_only' },
+      --   settings = {
+      --     intelephense = {
+      --       files = {
+      --         maxSize = 1000000,
+      --         associations = { '*.php', '*.phtml', '*.blade.php' }
+      --       },
+      --       maxMemory = 256,
+      --       completion = {
+      --         enable = true
+      --       },
+      --       format = {
+      --         enable = true
+      --       },
+      --       environment = {
+      --         includePaths = {
+      --           vim.fs.joinpath(vim.fn.getcwd(), '_ide_helper.php')
+      --         }
+      --       },
+      --       stubs = {
+      --         'standard',
+      --         'Core',
+      --         'date',
+      --         'phpunit',
+      --         'laravel',
+      --         'pcre',
+      --         'intl'
+      --       },
+      --       diagnostics = {
+      --         enable = true,
+      --         run = 'onType', -- onType | onSave
+      --         -- undefinedMethods = false
+      --       },
+      --     },
+      --   },
+      -- })
+      vim.lsp.config('phpactor', {})
+      vim.lsp.config('laravel-ls', {})
 
       -- https://github.com/neovim/nvim-lspconfig/blob/master/lsp/texlab.lua
       -- https://github.com/latex-lsp/texlab
