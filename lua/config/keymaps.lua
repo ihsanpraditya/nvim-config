@@ -60,9 +60,6 @@ vim.keymap.set("t", "jk", "<C-\\><C-n>") -- map <jk> to <Esc>
 -- prevent mouse visual click selection
 vim.keymap.set('n', '<LeftDrag>', '<LeftMouse>', { noremap = true })
 
--- open new buffer
-vim.keymap.set("n", "<leader>n", ':enew<CR>')
-
 -- clear search highlight
 vim.keymap.set("n", "<ESC>", ':nohlsearch<CR>')
 

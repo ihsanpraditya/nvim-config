@@ -25,23 +25,25 @@ return {
       local set = vim.keymap.set
 
       -- Add or skip cursor above/below the main cursor.
-      set({"n", "x"}, "<up>", function() mc.lineAddCursor(-1) end)
-      set({"n", "x"}, "<down>", function() mc.lineAddCursor(1) end)
-      set({"n", "x"}, "<leader><up>", function() mc.lineSkipCursor(-1) end)
-      set({"n", "x"}, "<leader><down>", function() mc.lineSkipCursor(1) end)
+      set({"n", "x"}, "<c-k>", function() mc.lineAddCursor(-1) end)
+      set({"n", "x"}, "<c-j>", function() mc.lineAddCursor(1) end)
+      set({"n", "x"}, "<c-s-k>", function() mc.lineSkipCursor(-1) end)
+      set({"n", "x"}, "<c-s-j>", function() mc.lineSkipCursor(1) end)
 
       -- Add or skip adding a new cursor by matching word/selection
       set({"n", "x"}, "gl", function() mc.matchAddCursor(1) end)
-      set({"n", "x"}, "gk", function() mc.matchSkipCursor(1) end)
       set({"n", "x"}, "gL", function() mc.matchAddCursor(-1) end)
-      set({"n", "x"}, "gK", function() mc.matchSkipCursor(-1) end)
+      set({"n", "x"}, "g>", function() mc.matchSkipCursor(1) end)
+      set({"n", "x"}, "g<", function() mc.matchSkipCursor(-1) end)
+      set({"n", "x"}, "ga", function() mc.searchAllAddCursors() end)
+      set({"n", "v"}, "ga", function() mc.matchAllAddCursors() end)
 
       -- Add and remove cursors with control + left click.
       set("n", "<c-leftmouse>", mc.handleMouse)
       set("n", "<c-leftdrag>", mc.handleMouseDrag)
       set("n", "<c-leftrelease>", mc.handleMouseRelease)
 
-      -- Disable and enable cursors.
+      -- Disable and enable multi-cursor mode.
       set({"n", "x"}, "<c-q>", mc.toggleCursor)
 
       -- Mappings defined in a keymap layer only apply when there are
@@ -49,11 +51,11 @@ return {
       mc.addKeymapLayer(function(layerSet)
 
         -- Select a different cursor as the main one.
-        layerSet({"n", "x"}, "<left>", mc.prevCursor)
-        layerSet({"n", "x"}, "<right>", mc.nextCursor)
+        layerSet({"n", "x"}, "<c-h>", mc.prevCursor)
+        layerSet({"n", "x"}, "<c-l>", mc.nextCursor)
 
         -- Delete the main cursor.
-        layerSet({"n", "x"}, "<leader>x", mc.deleteCursor)
+        layerSet({"n", "x"}, "<c-x>", mc.deleteCursor)
 
         -- Enable and clear cursors using escape.
         layerSet("n", "<esc>", function()
