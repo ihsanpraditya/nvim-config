@@ -1,5 +1,5 @@
 -- index
--- neo-tree
+-- neo-tree: file manager -- commented
 -- nvim-tree: file manager -- commented
 -- dotenv
 -- treesitter
@@ -22,39 +22,64 @@
 -- buffer deletion
 return {
   {'preservim/tagbar'},
+  -- {
+  --   "nvim-neo-tree/neo-tree.nvim",
+  --   branch = "v3.x",
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim",
+  --     "MunifTanjim/nui.nvim",
+  --     "nvim-tree/nvim-web-devicons", -- optional, but recommended
+  --   },
+  --   cmd = { "Neotree" },
+  --   keys = {
+  --     { "<Leader>t", "<Cmd>Neotree toggle<CR>" }, -- change or remove this line if relevant.
+  --     { "<Leader>g", "<Cmd>Neotree focus git_status toggle<CR>" }, -- change or remove this line if relevant.
+  --     { "<Leader>y", "<Cmd>Neotree filesystem reveal toggle<CR>" }, -- change or remove this line if relevant.
+  --   },
+  --   lazy = false, -- neo-tree will lazily load itself
+  --   ---@module 'neo-tree'
+  --   ---@type neotree.Config
+  --   opts = {
+  --     event_handlers = {
+  --       {
+  --         event = "neo_tree_buffer_enter",
+  --         handler = function()
+  --           vim.opt_local.relativenumber = true
+  --         end,
+  --       }
+  --     },
+  --   }
+  -- },
   {
-    "nvim-neo-tree/neo-tree.nvim",
-    branch = "v3.x",
+    "nvim-tree/nvim-tree.lua",
+    version = "*",
+    lazy = false,
     dependencies = {
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-      "nvim-tree/nvim-web-devicons", -- optional, but recommended
+      "nvim-tree/nvim-web-devicons",
     },
-    cmd = { "Neotree" },
-    keys = {
-      { "<Leader>t", "<Cmd>Neotree toggle<CR>" }, -- change or remove this line if relevant.
-      { "<Leader>g", "<Cmd>Neotree focus git_status toggle<CR>" }, -- change or remove this line if relevant.
-      { "<Leader>y", "<Cmd>Neotree filesystem reveal toggle<CR>" }, -- change or remove this line if relevant.
-    },
-    lazy = false, -- neo-tree will lazily load itself
-    ---@module 'neo-tree'
-    ---@type neotree.Config
-    opts = {
-      event_handlers = {
-        {
-          event = "neo_tree_buffer_enter",
-          handler = function()
-            vim.opt_local.relativenumber = true
-          end,
-        }
-      },
-    }
+    config = function()
+      local api = require("nvim-tree.api")
+      local function opts(desc)
+        return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+      end
+      vim.keymap.set('n', '<Leader>t', api.tree.toggle, opts('Toggle'))
+      vim.keymap.set('n', '<Leader>y', api.tree.focus, opts('Focus'))
+      require("nvim-tree").setup({
+        on_attach = function(bufnr)
+          -- default mappings
+          api.config.mappings.default_on_attach(bufnr)
+
+          -- custom mappings
+          vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
+        end
+      })
+    end,
   },
   {
     "antosha417/nvim-lsp-file-operations",
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "nvim-neo-tree/neo-tree.nvim", -- makes sure that this loads after Neo-tree.
+      "nvim-tree/nvim-tree.lua",
     },
     config = function()
       require("lsp-file-operations").setup()

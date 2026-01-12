@@ -259,14 +259,14 @@ return {
           }),
           not is_android and null_ls.builtins.diagnostics.selene or nil,
           null_ls.builtins.diagnostics.phpcs,
-          null_ls.builtins.diagnostics.phpmd.with({
-            extra_args = { 
-              vim.fn.getcwd() .. "/phpmd.xml"  -- Current project root
-            }
-          }),
           -- null_ls.builtins.diagnostics.phpmd.with({
-          --   args = { "$FILENAME", "json", vim.fn.getcwd() .. "/phpmd.xml" }
+          --   extra_args = { 
+          --     vim.fn.getcwd() .. "/phpmd.xml"  -- Current project root
+          --   }
           -- }),
+          null_ls.builtins.diagnostics.phpmd.with({
+            args = { "$FILENAME", "json", vim.fn.getcwd() .. "/phpmd.xml" }
+          }),
           null_ls.builtins.diagnostics.phpstan,
           null_ls.builtins.diagnostics.staticcheck,
 
