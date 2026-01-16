@@ -59,18 +59,18 @@ return {
     },
     config = function()
       local api = require("nvim-tree.api")
-      local function opts(desc)
-        return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
-      end
-      vim.keymap.set('n', '<Leader>t', api.tree.toggle, opts('Toggle'))
-      vim.keymap.set('n', '<Leader>y', api.tree.focus, opts('Focus'))
+      vim.keymap.set('n', '<Leader>t', api.tree.toggle, { desc = 'nvim-tree: Toggle' })
+      vim.keymap.set('n', '<Leader>y', ':NvimTreeFindFileToggle<CR>', { desc = 'nvim-tree: Find and focus file' })
       require("nvim-tree").setup({
         on_attach = function(bufnr)
+          local function opts(desc)
+            return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+          end
           -- default mappings
           api.config.mappings.default_on_attach(bufnr)
 
           -- custom mappings
-          vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
+          vim.keymap.set('n', '?',  api.tree.toggle_help, opts('Help'))
         end
       })
     end,

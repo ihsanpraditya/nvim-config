@@ -258,24 +258,24 @@ return {
             extra_args = { "-c", "/google_checks.xml" }, -- or "/sun_checks.xml" or path to self written rules
           }),
           not is_android and null_ls.builtins.diagnostics.selene or nil,
-          null_ls.builtins.diagnostics.phpcs,
+          null_ls.builtins.diagnostics.phpcs.with({}),
           -- null_ls.builtins.diagnostics.phpmd.with({
           --   extra_args = { 
           --     vim.fn.getcwd() .. "/phpmd.xml"  -- Current project root
           --   }
           -- }),
-          null_ls.builtins.diagnostics.phpmd.with({
-            args = { "$FILENAME", "json", vim.fn.getcwd() .. "/phpmd.xml" }
-          }),
-          null_ls.builtins.diagnostics.phpstan.with({
-            command = "vendor/bin/phpstan",
-            args = { "analyse", "--error-format", "raw", "--no-progress", "--memory-limit", "1G" },
-            to_temp_file = false,  -- Important for Symfony
-            diagnostics_on_save = true,
-            condition = function(utils)
-              return utils.root_has_file({ "composer.json", "phpstan.dist.neon" })
-            end,
-          }),
+          -- null_ls.builtins.diagnostics.phpmd.with({
+          --   args = { "$FILENAME", "json", vim.fn.getcwd() .. "/phpmd.xml" }
+          -- }),
+          -- null_ls.builtins.diagnostics.phpstan.with({
+          --   command = "vendor/bin/phpstan",
+          --   args = { "analyse", "--error-format", "raw", "--no-progress", "--memory-limit", "1G" },
+          --   to_temp_file = false,  -- Important for Symfony
+          --   diagnostics_on_save = true,
+          --   condition = function(utils)
+          --     return utils.root_has_file({ "composer.json", "phpstan.dist.neon" })
+          --   end,
+          -- }),
           null_ls.builtins.diagnostics.staticcheck,
 
           -- code actions
