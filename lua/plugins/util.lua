@@ -62,6 +62,10 @@ return {
       vim.keymap.set('n', '<Leader>t', api.tree.toggle, { desc = 'nvim-tree: Toggle' })
       vim.keymap.set('n', '<Leader>y', ':NvimTreeFindFileToggle<CR>', { desc = 'nvim-tree: Find and focus file' })
       require("nvim-tree").setup({
+        view = {
+          number = true,
+          relativenumber = true,
+        },
         on_attach = function(bufnr)
           local function opts(desc)
             return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
@@ -181,7 +185,18 @@ return {
   {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
-    opts = {}
+    opts = {},
+    config = function()
+      local todo = require('todo-comments')
+      require('todo-comments').setup()
+      vim.keymap.set("n", "]t", function()
+        todo.jump_next()
+      end, { desc = "Next todo comment" })
+      
+      vim.keymap.set("n", "[t", function()
+        todo.jump_prev()
+      end, { desc = "Previous todo comment" })
+    end
   },
   {
     'vidocqh/data-viewer.nvim',

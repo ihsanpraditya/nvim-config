@@ -35,8 +35,8 @@ return {
       set({"n", "x"}, "gL", function() mc.matchAddCursor(-1) end)
       set({"n", "x"}, "g>", function() mc.matchSkipCursor(1) end)
       set({"n", "x"}, "g<", function() mc.matchSkipCursor(-1) end)
-      set({"n", "x"}, "ga", function() mc.searchAllAddCursors() end)
-      set({"n", "v"}, "ga", function() mc.matchAllAddCursors() end)
+      set({"n", "x"}, "gaa", function() mc.searchAllAddCursors() end)
+      set({"n", "v"}, "gaa", function() mc.matchAllAddCursors() end)
 
       -- Add and remove cursors with control + left click.
       set("n", "<c-leftmouse>", mc.handleMouse)
