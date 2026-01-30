@@ -72,6 +72,7 @@ vim.g.markdown_folding = 1
 vim.g.org_folding = 1
 vim.g.org_indent_mode = 0
 vim.o.foldmethod = 'indent'
+vim.o.foldenable = false
 
 -- UPDATETIME
 vim.o.updatetime = 50

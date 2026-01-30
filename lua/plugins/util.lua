@@ -51,14 +51,19 @@ return {
   --   }
   -- },
   {
-    "nvim-tree/nvim-tree.lua",
-    version = "*",
+    'nvim-tree/nvim-tree.lua',
+    version = '*',
     lazy = false,
     dependencies = {
-      "nvim-tree/nvim-web-devicons",
+      'nvim-tree/nvim-web-devicons',
+      'b0o/nvim-tree-preview.lua',
+      dependencies = {
+        'nvim-lua/plenary.nvim',
+        '3rd/image.nvim', -- Optional, for previewing images
+      },
     },
     config = function()
-      local api = require("nvim-tree.api")
+      local api = require('nvim-tree.api')
       vim.keymap.set('n', '<Leader>t', api.tree.toggle, { desc = 'nvim-tree: Toggle' })
       vim.keymap.set('n', '<Leader>y', ':NvimTreeFindFileToggle<CR>', { desc = 'nvim-tree: Find and focus file' })
       require("nvim-tree").setup({
@@ -67,15 +72,34 @@ return {
           relativenumber = true,
         },
         on_attach = function(bufnr)
+          -- default mappings
+          -- Important: When you supply an `on_attach` function, nvim-tree won't
+          -- automatically set up the default keymaps. To set up the default keymaps,
+          -- call the `default_on_attach` function. See `:help nvim-tree-quickstart-custom-mappings`.
+          api.config.mappings.default_on_attach(bufnr)
+
           local function opts(desc)
             return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
           end
-          -- default mappings
-          api.config.mappings.default_on_attach(bufnr)
+          local preview = require('nvim-tree-preview')
 
           -- custom mappings
           vim.keymap.set('n', '?',  api.tree.toggle_help, opts('Help'))
-        end
+          vim.keymap.set('n', 'P', preview.watch, opts 'Preview (Watch)')
+          vim.keymap.set('n', '<Esc>', preview.unwatch, opts 'Close Preview/Unwatch')
+          vim.keymap.set('n', '<C-f>', function() return preview.scroll(4) end, opts 'Scroll Down')
+          vim.keymap.set('n', '<C-b>', function() return preview.scroll(-4) end, opts 'Scroll Up')
+          vim.keymap.set('n', '<Tab>', function()
+            local ok, node = pcall(api.tree.get_node_under_cursor)
+            if ok and node then
+              if node.type == 'directory' then
+                api.node.open.edit()
+              else
+                preview.node(node, { toggle_focus = true })
+              end
+            end
+          end, opts 'Preview')
+        end,
       })
     end,
   },
