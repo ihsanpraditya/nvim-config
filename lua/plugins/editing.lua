@@ -7,7 +7,13 @@
 -- sleuth
 -- multi cursor
 -- gitsigns
---
+-- indent-blankline
+-- nvim-autopairs
+-- undotree
+-- nvim-surround
+-- Comment
+-- text-case
+-- vim-matchup
 return {
   { "tpope/vim-fugitive" },
   { "tpope/vim-rhubarb" },

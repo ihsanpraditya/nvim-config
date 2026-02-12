@@ -18,7 +18,7 @@ vim.api.nvim_create_autocmd("BufReadPost", {
   end,
 })
 
--- Disable folding in Telescope's result window.
+-- Disable folding at Telescope's result window.
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "TelescopeResults" },
   callback = function()
@@ -26,6 +26,7 @@ vim.api.nvim_create_autocmd("FileType", {
   end
 })
 
+-- Disable folding at neo-tree window
 -- these codes below are from https://github.com/nvim-neo-tree/neo-tree.nvim/discussions/1676#discussioncomment-12068158
 vim.api.nvim_create_autocmd('FileType', {
   pattern = {'neo-tree-preview', 'neo-tree'},
@@ -41,14 +42,14 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
--- Toggle LSP diagnostics
+-- Add command to toggle LSP diagnostics
 vim.api.nvim_create_user_command('ToggleDiagnostics', function()
     local current_state = vim.diagnostic.is_enabled()
     vim.diagnostic.enable(not current_state)
     print("Diagnostics " .. (current_state and "disabled" or "enabled"))
 end, {})
 
--- Disable folding in Telescope's result window.
+-- Disable folding in ledger file
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "ledger" },
   callback = function()

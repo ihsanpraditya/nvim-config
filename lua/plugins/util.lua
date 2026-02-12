@@ -1,13 +1,16 @@
 -- index
+-- tagbar
 -- neo-tree: file manager -- commented
--- nvim-tree: file manager -- commented
+-- nvim-tree: file manager
+-- lsp-file-operations
 -- dotenv
 -- treesitter
+-- nvim-notify
 -- mason: external tools manager
 -- fidget
 -- todo-comments
 -- data-viewer: CSV, XLS
--- markdown
+-- markdown-preview
 -- telescope: Ctrl-P
 -- dbee: database integration
 -- trouble: diagnostics list
@@ -263,12 +266,39 @@ return {
       "MunifTanjim/nui.nvim",
     },
     build = function()
-      -- Install tries to automatically detect the install method.
-      -- if it fails, try calling it with one of these parameters:
-      --    "curl", "wget", "bitsadmin", "go"
       require("dbee").install()
     end,
-    opts = {},
+    config = function()
+      require("dbee").setup({
+        drawer = {
+          window_options = {
+            number = true,
+            relativenumber = true,
+          },
+        },
+        call_log = {
+          window_options = {
+            number = true,
+            relativenumber = true,
+          },
+        },
+        sources = {
+          -- example DBEE_CONNECTIONS
+          --  [
+          --     {
+          --       "url": "maqiis:123@tcp(localhost:3306)/akademik_maqiis",
+          --       "name": "Maqiis",
+          --       "type": "mysql"
+          --     }
+          -- ]
+          -- use array, export it in shell session, like config.fish, .zshrc, .bashrc
+          require("dbee.sources").EnvSource:new("DBEE_CONNECTIONS"),
+          require("dbee.sources").FileSource:new(
+            vim.fn.stdpath("cache") .. "/dbee/persistence.json"
+          ),
+        },
+      })
+    end,
     keys = {
       {
         "<leader>d",

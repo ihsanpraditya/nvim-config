@@ -1,3 +1,15 @@
+-- INDEX
+-- bufferline (tab bar)
+-- lualine (status bar)
+-- themes:
+-- rose-pine
+-- dracula
+-- nightfox
+-- tokyonight
+-- oxocarbon
+-- midnight
+-- monokai-pro
+-- vim-enfocado
 return {
   {
     'akinsho/bufferline.nvim',
