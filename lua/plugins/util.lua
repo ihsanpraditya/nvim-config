@@ -547,12 +547,12 @@ return {
   --     }
   --   }
   -- },
-  {
-    "nvim-neorg/neorg",
-    lazy = false,  -- Disable lazy loading as some `lazy.nvim` distributions set `lazy = true` by default
-    version = "*", -- Pin Neorg to the latest stable release
-    config = true,
-  },
+  -- {
+  --   "nvim-neorg/neorg",
+  --   lazy = false,  -- Disable lazy loading as some `lazy.nvim` distributions set `lazy = true` by default
+  --   version = "*", -- Pin Neorg to the latest stable release
+  --   config = true,
+  -- },
   {
     "epwalsh/pomo.nvim",
     version = "*", -- Recommended, use latest release instead of latest commit
