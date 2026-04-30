@@ -95,6 +95,8 @@ return {
         },
       })
 
+      -- vim.lsp.config('dcmls', {})
+
       vim.lsp.config('denols', {
         root_dir = require("lspconfig").util.root_pattern({"deno.json", "deno.jsonc"}),
       })
@@ -103,7 +105,7 @@ return {
         filetypes = { 'html', 'typescriptreact', 'javascriptreact', 'css', 'sass', 'scss', 'less', 'svelte' },
       })
 
-      vim.lsp.config('gopls', {})
+      -- vim.lsp.config('gopls', {})
 
       -- PHP
       -- docs: https://github.com/bmewburn/intelephense-docs/blob/master/installation.md
@@ -145,12 +147,12 @@ return {
       --     },
       --   },
       -- })
-      vim.lsp.config('phpactor', {})
-      vim.lsp.config('laravel-ls', {})
+      -- vim.lsp.config('phpactor', {})
+      -- vim.lsp.config('laravel-ls', {})
 
       -- https://github.com/neovim/nvim-lspconfig/blob/master/lsp/texlab.lua
       -- https://github.com/latex-lsp/texlab
-      vim.lsp.config('texlab', {})
+      -- vim.lsp.config('texlab', {})
 
       vim.lsp.config('lua_ls', {
         settings = {
@@ -165,16 +167,16 @@ return {
         },
       })
 
-      vim.lsp.config('svelte', {})
+      -- vim.lsp.config('svelte', {})
 
-      vim.lsp.config('texlab', {})
+      -- vim.lsp.config('texlab', {})
 
       vim.lsp.config('ts_ls', {
         root_dir = require("lspconfig").util.root_pattern({ "package.json", "tsconfig.json" }),
         single_file_support = false,
       })
 
-      vim.lsp.config('vue_ls', {})
+      -- vim.lsp.config('vue_ls', {})
     end,
   },
   {
@@ -247,6 +249,7 @@ return {
           -- formatters
           null_ls.builtins.formatting.stylua,
           null_ls.builtins.formatting.blade_formatter,
+          null_ls.builtins.formatting.dart_format,
           null_ls.builtins.formatting.phpcsfixer,
           null_ls.builtins.formatting.pint,
           null_ls.builtins.formatting.prettier,
