@@ -124,79 +124,79 @@ return {
     },
     cmd = { "Dotenv" }
   },
-  {
-    "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-    opts = {
-      highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = true,
-      },
-      indent = { enable = true },
-      autotag = {
-        enable = true,
-        enable_rename = true,
-        enable_close = true,
-        enable_close_on_slash = true,
-        filetypes = {
-          "html",
-          "javascript",
-          "typescript",
-          "javascriptreact",
-          "typescriptreact",
-          "svelte",
-          "vue",
-          "tsx",
-          "jsx",
-          "rescript",
-          "css",
-          "lua",
-          "xml",
-          "markdown",
-        },
-      },
-      ensure_installed = {
-        "bash",
-        "markdown",
-        "html",
-        "css",
-        "javascript",
-        "tsx",
-        "php",
-        "query",
-        "lua",
-        "vim",
-      },
-      auto_install = false,
-      incremental_selection = {
-        enable = false
-      },
-      -- matchup = {
-      --   enable = true
-      -- }
-    },
-    -- config = function(_, opts)
-      -- lagi error, di-comment dulu
-    --   local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-    --
-    --   parser_config.blade = {
-    --     install_info = {
-    --       url = "https://github.com/EmranMR/tree-sitter-blade",
-    --       files = { "src/parser.c" },
-    --       branch = "main",
-    --     },
-    --     filetype = "blade",
-    --   }
-    --
-    --   vim.filetype.add({
-    --     pattern = {
-    --       [".*%.blade%.php"] = "blade",
-    --     },
-    --   })
-    --
-    --   require("nvim-treesitter.configs").setup(opts)
-    -- end,
-  },
+  -- {
+  --   "nvim-treesitter/nvim-treesitter",
+  --   build = ":TSUpdate",
+  --   opts = {
+  --     highlight = {
+  --       enable = true,
+  --       additional_vim_regex_highlighting = true,
+  --     },
+  --     indent = { enable = true },
+  --     autotag = {
+  --       enable = true,
+  --       enable_rename = true,
+  --       enable_close = true,
+  --       enable_close_on_slash = true,
+  --       filetypes = {
+  --         "html",
+  --         "javascript",
+  --         "typescript",
+  --         "javascriptreact",
+  --         "typescriptreact",
+  --         "svelte",
+  --         "vue",
+  --         "tsx",
+  --         "jsx",
+  --         "rescript",
+  --         "css",
+  --         "lua",
+  --         "xml",
+  --         "markdown",
+  --       },
+  --     },
+  --     ensure_installed = {
+  --       "bash",
+  --       "markdown",
+  --       "html",
+  --       "css",
+  --       "javascript",
+  --       "tsx",
+  --       "php",
+  --       "query",
+  --       "lua",
+  --       "vim",
+  --     },
+  --     auto_install = false,
+  --     incremental_selection = {
+  --       enable = false
+  --     },
+  --     -- matchup = {
+  --     --   enable = true
+  --     -- }
+  --   },
+  --   -- config = function(_, opts)
+  --     -- lagi error, di-comment dulu
+  --   --   local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+  --   --
+  --   --   parser_config.blade = {
+  --   --     install_info = {
+  --   --       url = "https://github.com/EmranMR/tree-sitter-blade",
+  --   --       files = { "src/parser.c" },
+  --   --       branch = "main",
+  --   --     },
+  --   --     filetype = "blade",
+  --   --   }
+  --   --
+  --   --   vim.filetype.add({
+  --   --     pattern = {
+  --   --       [".*%.blade%.php"] = "blade",
+  --   --     },
+  --   --   })
+  --   --
+  --   --   require("nvim-treesitter.configs").setup(opts)
+  --   -- end,
+  -- },
   {
     "rcarriga/nvim-notify",
     lazy = true,
