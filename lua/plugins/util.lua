@@ -67,7 +67,7 @@ return {
     },
     config = function()
       local api = require('nvim-tree.api')
-      vim.keymap.set('n', '<Leader>t', api.tree.toggle, { desc = 'nvim-tree: Toggle' })
+      vim.keymap.set('n', '<Leader>t', ':NvimTreeToggle<CR>', { desc = 'nvim-tree: Toggle' })
       vim.keymap.set('n', '<Leader>y', ':NvimTreeFindFileToggle<CR>', { desc = 'nvim-tree: Find and focus file' })
       require("nvim-tree").setup({
         view = {
